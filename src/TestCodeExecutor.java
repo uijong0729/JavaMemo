@@ -1,7 +1,5 @@
-import java.io.File;
-
-import file.FileSimpleManager;
-import reflection.CreateResultMap;
+import gui.MakeTextArea;
+import reflection.ResultMap;
 
 public class TestCodeExecutor {
 
@@ -9,9 +7,11 @@ public class TestCodeExecutor {
 		//String filepath = System.getProperty("user.dir") + "/test.txt";
 		//FileSimpleManager.makeTextFile(filepath, "text");
 		//FileSimpleManager.readTextFile(filepath);
-		
-		CreateResultMap map = new CreateResultMap();
+
+		ResultMap map = new ResultMap();
 		System.out.println(map.getFields("VARCHAR"));
+
+		MakeTextArea.showTextArea(map.getFields("VARCHAR"));
 	}
 
 }
