@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class FileSimpleManager {
@@ -17,11 +16,11 @@ public class FileSimpleManager {
     	StringBuffer sb = new StringBuffer();
     	try(FileInputStream fis = new FileInputStream(file);
     			BufferedReader br = new BufferedReader(new InputStreamReader(fis));){
-    		
+
     		for(String str = br.readLine(); str != null ; str = br.readLine()) {
                 sb.append(str + "\n");
             }
-    		
+
     	} catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,11 +39,26 @@ public class FileSimpleManager {
 			}
     	}
     	file.setWritable(true);
-    	
+
         try (FileOutputStream fos = new FileOutputStream(file);) {
             fos.write(text.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public  boolean deleteFiles(File file){
+        File directory = new File(file.getParent());
+        if(directory.isDirectory()){
+            File[] list = directory.listFiles();
+            for(File f : list){
+                if(f.delete()){
+                    //action
+                }
+            }
+            return true;
+        }else{
+            return false;
         }
     }
 
