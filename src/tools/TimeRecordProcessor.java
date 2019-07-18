@@ -21,7 +21,7 @@ public class TimeRecordProcessor {
 					}
 					
 					long end = System.currentTimeMillis();
-					System.out.println("arraylist 실행 시간 : " + (end - start));
+					System.out.println("실행 시간 : " + (end - start));
 				}
 			}
 		}
