@@ -1,23 +1,39 @@
 package rxjava;
 
-import java.util.WeakHashMap;
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
-import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class HelloRxJava {
 	public static void main(String[] args) {
-        Flowable.just("Hello rxjava").subscribe(System.out::println);
-        Flowable.just("Hello rxjava").subscribe(new Consumer<String>(){
+		Observable<ArrayList<String>> flow = Observable.fromCallable(new Callable<ArrayList<String>>() {
 			@Override
-			public void accept(String t) throws Exception {
+			public ArrayList<String> call() throws Exception {
 				// TODO Auto-generated method stub
-				System.out.println(t);
-				
-			}}
-        );
-        WeakHashMap whm = new WeakHashMap<String, String>();
-      
-        
+				return createList();
+			}
+		}).subscribeOn(Schedulers.io())
+		.observeOn(Schedulers.single());
+		
+		Disposable disposable = flow.subscribe(list -> {
+		    for(String str : list) {
+		    	System.out.println(str);
+		    }
+		  }, err -> {
+			  System.out.println("err");
+		  });
+		
+		//disposable.dispose();
     }
+	
+	public static ArrayList<String> createList(){
+		ArrayList<String> list = new ArrayList<>();
+		for(int i = 0 ; i < 20 ; i++) {
+			list.add("number : " + i);
+		}
+		return list;
+	}
 }
