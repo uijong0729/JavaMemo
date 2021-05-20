@@ -10,6 +10,40 @@ import java.util.LinkedList;
  * collision
  *  - 해시 키는 무한한데, 해시 코드는 정수개 밖에 제공하지 못하기 때문에 발생
  *  - 알고리즘이 아무리 좋아도 어떤 키들은 동일한 결과를 리턴할 수 있다.
+ *  
+ *  
+ *  
+ *  HashTable 
+ *  {
+ *  	LinkedList
+ *  	{
+ *  		Node[0]
+ *  		{
+ *  			key
+ *  			value
+ *  		},
+ *  		Node[1]
+ *  		{
+ *  			key
+ *  			value
+ *  		},
+ *  		...
+ *  	},
+ *  	LinkedList
+ *  	{
+ *  		Node[0]
+ *  		{
+ *  			key
+ *  			value
+ *  		},
+ *  		Node[1]
+ *  		{
+ *  			key
+ *  			value
+ *  		},
+ *  		...
+ *  	}
+ *  }
  * 
  */
 public class HashTable {
