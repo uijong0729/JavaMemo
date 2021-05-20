@@ -25,17 +25,26 @@ public class MainRunner {
 //		list.printList();
 //		list.clear();
 		
-		Tree t = new Tree();
-		Branch node11 = new Branch(null, 4, null);
-		Branch node12 = new Branch(null, 5, null);
-		Branch node13 = new Branch(node11, 7, node12);
+//		Tree t = new Tree();
+//		Branch node11 = new Branch(null, 4, null);
+//		Branch node12 = new Branch(null, 5, null);
+//		Branch node13 = new Branch(node11, 7, node12);
+//		
+//		Branch node21 = new Branch(null, 9, null);
+//		Branch node22 = new Branch(null, 6, null);
+//		Branch node23 = new Branch(node21, 11, node22);
+//		
+//		t.preorder(node13);
+//		t.preorder(node23);
 		
-		Branch node21 = new Branch(null, 9, null);
-		Branch node22 = new Branch(null, 6, null);
-		Branch node23 = new Branch(node21, 11, node22);
 		
-		t.preorder(node13);
-		t.preorder(node23);
+		HashTable tbl = new HashTable(5);
+		tbl.put("abc", "ccc");
+		System.out.println(tbl.get("abc"));
+		
+		tbl.put("bdd", "eee");
+		System.out.println(tbl.get("bdd"));
+		
 	}
 
 }
