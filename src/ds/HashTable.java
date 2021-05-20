@@ -32,7 +32,6 @@ public class HashTable {
 	}
 	
 	// 배열 크기는 소수(素数（そすう)가 유리하다 
-	private static final int ARRAY_SIZE = 23;
 	private java.util.LinkedList<Node2>[] data;
 	
 	HashTable(int size) {
