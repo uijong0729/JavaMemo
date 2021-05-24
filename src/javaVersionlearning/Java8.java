@@ -201,7 +201,15 @@ public class Java8 implements TestDefaultInterface{
 
 
 interface TestDefaultInterface{
+	// java 8 : 디폴트 메소드
 	default void defaultMethod() {
+		// java 9 : 인터페이스 내 private 메소드 정의
+		staticPrivate();
 		System.out.println("default method");
+	}
+	
+	// java 9 : 인터페이스 내 private 메소드 정의
+	private static String staticPrivate() {
+	     return "static private";
 	}
 }
