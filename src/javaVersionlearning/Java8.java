@@ -179,7 +179,7 @@ public class Java8 implements TestDefaultInterface{
 	 * 
 	 * @return
 	 */
-	private static ArrayList<String> makeTestObj(){
+	static ArrayList<String> makeTestObj(){
 		var list = new ArrayList<String>();
 		// 중복 데이터
 		list.add("aaa");
