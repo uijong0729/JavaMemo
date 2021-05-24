@@ -1,5 +1,11 @@
 package sort;
 
+/*
+ * 임의의 값을 하나 선정 : Pivot -> 기준값 
+ * 
+ * 
+ * 
+ */
 public class QuickSort extends SortManager {
 	
 	
@@ -15,6 +21,7 @@ public class QuickSort extends SortManager {
 		recursive(arr, 0, arr.length-1);
 	}
 	
+	// 재귀호출 
 	public static void recursive(int[] arr, int start, int end) {
 		if(start < end) {
 			int pivot = partition(arr, start, end);
