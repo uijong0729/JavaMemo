@@ -6,7 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpClient.Version;
 
-public class java11 {
+public class Java11 {
 
 	public void test() {
 		try {

@@ -5,20 +5,52 @@ import java.net.http.HttpClient;
 import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Optional;
+import java.util.StringJoiner;
 
-public class java8 {
+public class Java8 implements TestDefaultInterface{
 
 	public static void main(String[] args) {
 		// Optional Test
 		System.out.println("=========Optional Test=========");
 		getOptionalString("myString");
 		getOptionalString(null); 
+		
+		// Lambda Test
 		System.out.println("=========Lambda Test=========");
 		testLambda("my lambda");
+		
+		// Stream Test
 		System.out.println("=========Stream Test=========");
 		testStream(makeTestObj());
+		
+		// parallelSort
+		System.out.println("=========parallelSort Test=========");
+		testParallelSort(new int[]{4,5,3,7,2,1,8,2});
+		
+		
+		// interface -> default Method
+		System.out.println("=========Default Method Test=========");
+		Java8 a = new Java8();
+		a.defaultMethod();
+		
+		// StringJoiner
+		System.out.println("=========StringJoiner Test=========");
+		StringJoiner sj = new StringJoiner("_postfix\n");
+		var list = makeTestObj();
+		for(String str : list) {
+			sj.add(str);
+		}
+		System.out.println(sj.toString());
+		
+		
+		// ZonedDateTime
+		System.out.println("=========ZonedDateTime Test=========");
+		ZonedDateTime zdt = ZonedDateTime.now();
+		System.out.println(zdt);
 	}
 	
 	
@@ -128,6 +160,19 @@ public class java8 {
 		});
 	}
 	
+	
+	/**
+	 * parallelSort()
+	 * 
+	 * @return
+	 */
+	private static void testParallelSort(int[] target){
+		Arrays.parallelSort(target);
+		for(int i : target) {
+			System.out.println(i);
+		}
+	}
+	
 
 	/**
 	 * 테스트 데이터 작성용
@@ -150,5 +195,13 @@ public class java8 {
 		// 기타 임의 값
 		list.add("ccc");
 		return list;
+	}
+
+}
+
+
+interface TestDefaultInterface{
+	default void defaultMethod() {
+		System.out.println("default method");
 	}
 }
