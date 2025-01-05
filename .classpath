@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
+	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
+			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="ignore_optional_problems" value="true"/>
+			<attribute name="m2e-apt" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
@@ -87,25 +91,22 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="c:/Users/kroch/.vscode/extensions/redhat.java-1.38.0-win32-x64/server/plugins/org.hamcrest_3.0.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+	<classpathentry kind="lib" path="c:/Users/kroch/.m2/repository/io/reactivex/rxjava2/rxjava/2.2.0/rxjava-2.2.0.jar">
 		<attributes>
+			<attribute name="maven.artifactId" value="rxjava"/>
 			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.scope" value="compile"/>
+			<attribute name="maven.version" value="2.2.0"/>
+			<attribute name="maven.groupId" value="io.reactivex.rxjava2"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="target/generated-sources/annotations">
+	<classpathentry kind="lib" path="c:/Users/kroch/.m2/repository/org/reactivestreams/reactive-streams/1.0.2/reactive-streams-1.0.2.jar">
 		<attributes>
-			<attribute name="optional" value="true"/>
+			<attribute name="maven.artifactId" value="reactive-streams"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" output="target/test-classes" path="target/generated-test-sources/test-annotations">
-		<attributes>
-			<attribute name="optional" value="true"/>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="ignore_optional_problems" value="true"/>
-			<attribute name="m2e-apt" value="true"/>
+			<attribute name="maven.scope" value="compile"/>
+			<attribute name="maven.version" value="1.0.2"/>
+			<attribute name="maven.groupId" value="org.reactivestreams"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>

@@ -10,9 +10,10 @@ public class Outer {
         void execute() {
             // NG : Cannot make a static reference to the non-static field num
             // System.out.println(num * data);
-            
+        
             // OK
             System.out.println(data);
+            System.out.println(new Outer().num);
         }
     }
 
@@ -66,5 +67,7 @@ public class Outer {
 
         // OK
         new Inner2().test();
+
+        new Sinner().execute();
 	}
 }
