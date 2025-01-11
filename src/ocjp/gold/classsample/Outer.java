@@ -1,4 +1,4 @@
-package ocjp.gold;
+package ocjp.gold.classsample;
 
 // Outer class
 public class Outer {

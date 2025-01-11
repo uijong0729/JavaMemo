@@ -32,3 +32,83 @@ public class Outer {
     }
 }
 ```
+## Interface
+- 8버전부터 static method를 허용
+default method와는 달리 Override할 수 없다
+```java
+public interface Vehicle {
+    static int getHorsePower(int rpm, int torque) {
+        return (rpm * torque) / 5252;
+    }
+}
+```
+- default method의 다중상속문제(Diamond Problem)에선 어떤 메소드를 호출할지 명시해야한다.
+```java
+interface A {
+    default void test() {}
+}
+interface B {
+    default void test() {}
+}
+public class Sample implements A, B {
+    @Override
+    public void test() {
+        // 명시하지 않으면 컴파일 에러
+        A.super.test();
+        B.super.test();
+    }
+}
+```
+- default method와 정의명과 super클래스의 method의 정의명이 겹치면 super class의 method가 호출된다.
+```java
+// ---A.java
+interface A {
+    default void test() {
+        System.out.println("a");
+    }
+}
+// ---B.java
+class B {
+    public void test() {
+        System.out.println("b");
+    }
+}
+// ---C.java
+class C extends B implements A {}
+// ---Main.java
+public class Main {
+    public static void main(String[] args) {
+        A a = new C();
+        // 출력값 : b
+        a.test();
+    }
+}
+```
+- 인터페이스의 private method는 버전9부터 가능해졌다.
+```java
+public interface Sample {
+    default void a() {
+        b();
+    }
+    private void b() {
+        System.out.println("b");
+    }
+}
+```
+## Enum
+- 열거형의 특정 값 취득
+```java
+// --- Test.java
+public enum Test {
+    A, B, C
+}
+// --- Main.java
+public class Main {
+    public static void main(String[] args) {
+        // A : 배열에서 n번째 요소 지정
+        System.out.println(Test.values()[0]);
+        // A : 열거형 상수 이름을 문자열로 지정
+        System.out.println(Test.valueOf("A"));
+    }
+}
+```

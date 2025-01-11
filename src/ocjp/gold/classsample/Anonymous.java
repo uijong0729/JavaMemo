@@ -1,4 +1,4 @@
-package ocjp.gold;
+package ocjp.gold.classsample;
 
 // 익명 클래스
 public class Anonymous {
