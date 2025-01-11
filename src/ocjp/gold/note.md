@@ -112,3 +112,26 @@ public class Main {
     }
 }
 ```
+- enum의 각 열거형 상수는 인스턴스가 생성된다.
+```java
+enum Sample {
+    A("hello"), B("hello"), C("hello")
+    private final String value;
+    private Sample(String value) {
+        System.out.println(value);
+        this.value = value;
+    }
+    @Override
+    public String toString() {
+        return this.value;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 각 열거형 상수는 인스턴스화 되어 
+        // "hello"가 4번 출력된다
+        System.out.println(Sample.A);
+    }
+}
+```
