@@ -135,3 +135,9 @@ public class Main {
     }
 }
 ```
+## 람다와 함수형 인터페이스
+- Supplier는 인수를 받지않고 get으로 값을 받는다(공급 전문)
+```java
+Supplier<String> supplier = () -> "test";
+System.out.println(supplier.get());
+```
