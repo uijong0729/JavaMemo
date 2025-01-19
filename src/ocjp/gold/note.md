@@ -141,3 +141,7 @@ public class Main {
 Supplier<String> supplier = () -> "test";
 System.out.println(supplier.get());
 ```
+- Consumer는 인수를 하나만 받지만 BiConsumer는 인수를 두개로 받는다
+```java
+BiConsumer<Integer, Integer> test = (a, b) -> System.out.println(a + b);
+```
