@@ -1,2 +1,0 @@
-cd C:\develop\java-memo\JavaMemo\src\ocjp\gold\lambda
-java BynaryOperatorSample.java
