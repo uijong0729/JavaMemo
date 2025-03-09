@@ -42,9 +42,18 @@ exec2.schedule(() -> {
 ```
 - 쓰레드 지연후 반복실행
 ```java
-// 2초 후 1초 마다 실행하는 쓰레드를 실행행
+// 2초 후 1초 마다 실행하는 쓰레드를 실행 지정 반복
+// 완전히 고정된 간격이므로 시간보다 처리가 길어지면 작업들이 서로 병렬적으로 실행됨
 ScheduledExecutorService exec3 = Executors.newSingleThreadScheduledExecutor();
 exec3.scheduleAtFixedRate(() -> {
     System.out.println("exec3");
 }, 2, 1, TimeUnit.SECONDS);
+
+// 2초 후 1초 마다 실행하는 쓰레드를 실행
+// 시간보다 처리가 길어지면 작업의 완료까지 기다린 뒤 실행
+ScheduledExecutorService exec4 = Executors.newSingleThreadScheduledExecutor();
+exec4.scheduleWithFixedDelay(() -> {
+    System.out.println("scheduleWithFixedDelay");
+}, 2000, 1000, TimeUnit.SECONDS);
 ```
+- Callable을 get했을때 처리에 예외가 발생하는 경우, 예외를 Catch하려면 ExecutionException으로 Catch해야한다.

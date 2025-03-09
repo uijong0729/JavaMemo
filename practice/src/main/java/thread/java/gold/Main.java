@@ -45,10 +45,18 @@ public class Main {
             exec2.shutdown();
         }, 1, TimeUnit.SECONDS);
 
-        // 2초 후 1초 마다 실행하는 쓰레드를 실행행
+        // 2초 후 1초 마다 실행하는 쓰레드를 실행 지정 반복
+        // 시간보다 처리가 길어지면 작업들이 서로 겹쳐서 실행됨
         ScheduledExecutorService exec3 = Executors.newSingleThreadScheduledExecutor();
         exec3.scheduleAtFixedRate(() -> {
             System.out.println("exec3");
         }, 2, 1, TimeUnit.SECONDS);
+
+        // 2초 후 1초 마다 실행하는 쓰레드를 실행
+        // 시간보다 처리가 길어지면 작업의 완료까지 기다린 뒤 실행
+        ScheduledExecutorService exec4 = Executors.newSingleThreadScheduledExecutor();
+        exec4.scheduleWithFixedDelay(() -> {
+            System.out.println("scheduleWithFixedDelay");
+        }, 2000, 1000, TimeUnit.SECONDS);
     }
 }
