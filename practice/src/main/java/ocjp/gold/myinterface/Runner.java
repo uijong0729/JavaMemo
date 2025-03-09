@@ -1,4 +1,4 @@
-package ocjp.gold.interfacesample;
+package ocjp.gold.myinterface;
 
 public class Runner {
 

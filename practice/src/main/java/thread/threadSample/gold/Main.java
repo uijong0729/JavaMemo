@@ -1,4 +1,4 @@
-package thread.java.gold;
+package thread.threadSample.gold;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

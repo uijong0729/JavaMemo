@@ -1,4 +1,4 @@
-package ocjp.gold.lambda;
+package ocjp.gold.mylambda;
 
 import java.util.function.BinaryOperator;
 

@@ -1,4 +1,4 @@
-package ocjp.gold.interfacesample;
+package ocjp.gold.myclasss;
 
 public interface A {
     default void test() {
