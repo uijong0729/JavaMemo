@@ -3,7 +3,14 @@ package ocjp.gold.mystream;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import ocjp.gold.Human;
+import ocjp.gold.Human.Gender;
+
 import java.util.List;
+import java.util.Map;
 
 public class example1 {
     public static void main(String[] args) {
@@ -57,6 +64,29 @@ public class example1 {
         List<String> strList = Arrays.asList("A", "B", "C", "D");
         // compare는 String클래스에도 있으며, String클래스에서의 max는 나중에오는 문자이다
         Optional<String> strResult = strList.stream().max((e, f) -> e.compareTo(f));
-        strResult.ifPresent(System.out::println);        
+        strResult.ifPresent(System.out::println);
+        
+        // java.util.Collector
+        List<String> words = List.of("apple", "banana", "kiwi");
+        Collector<String, int[], Integer> lengthSumCollector =
+                Collector.of(
+                        () -> new int[]{0},             // supplier: 초기 누적자 (길이 1의 int 배열)
+                        (acc, word) -> acc[0] += word.length(), // accumulator: 각 단어의 길이를 누적
+                        (acc1, acc2) -> { acc1[0] += acc2[0]; return acc1; }, // combiner: 병렬 처리 결과 병합
+                        acc -> acc[0]                     // finisher: 최종 결과 변환
+                );
+        int totalLength = words.stream().collect(lengthSumCollector);
+        System.out.println("Total length: " + totalLength); // 출력: Total length: 15
+
+        // java.util.Collector : groupingBy
+        List<Human> humanList = Arrays.asList(
+            new Human(10, "a", Gender.female),
+            new Human(10, "b", Gender.female),
+            new Human(11, "c", Gender.female),
+            new Human(11, "d", Gender.male ),
+            new Human(12, "e", Gender.male)
+        );
+        Map<Gender, List<Human>> group = humanList.stream().collect(Collectors.groupingBy(Human::getGender));
+        System.out.println(group);
     }
 }
