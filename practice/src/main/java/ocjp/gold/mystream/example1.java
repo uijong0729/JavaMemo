@@ -2,13 +2,15 @@ package ocjp.gold.mystream;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import ocjp.gold.Human;
 import ocjp.gold.Human.Gender;
-
+import java.util.Set;
 import java.util.List;
 import java.util.Map;
 
@@ -79,6 +81,7 @@ public class example1 {
         System.out.println("Total length: " + totalLength); // 출력: Total length: 15
 
         // java.util.Collector : groupingBy
+        // 스트림의 요소를 특정한 기준으로 그룹화
         List<Human> humanList = Arrays.asList(
             new Human(10, "a", Gender.female),
             new Human(10, "b", Gender.female),
@@ -88,5 +91,27 @@ public class example1 {
         );
         Map<Gender, List<Human>> group = humanList.stream().collect(Collectors.groupingBy(Human::getGender));
         System.out.println(group);
+
+        // java.util.Collector : partitioningBy
+        // 스트림의 요소를 지정한 조건에 일치하는 그룹과 일치하지 않는 그룹, 두 가지로 분할
+        List<String> fruitList = Arrays.asList("banana", "apple", "orange");
+        Stream<String> stream = fruitList.stream();
+        Set<Boolean> listKeys = stream.collect(
+            Collectors.partitioningBy(str -> str.length() > 5)
+        ).keySet();
+        // false
+        // true
+        listKeys.forEach(System.out::println);
+
+        // Stream peek
+        // peek은 처리 중간에 픽업해서 내용을 들여다보고 싶을때 사용된다. (실제 데이터에 영향은 없음)
+        Stream<String> stream3 = Arrays.asList("banana", "apple", "orange").stream();
+        // 콘솔 : banana BANANA BANANAorange ORANGE ORANGE
+        stream3.filter(str -> str.length() > 5)
+            .peek(str -> System.out.print(str + " "))
+            .map(str -> str.toUpperCase())
+            .peek(str -> System.out.print(str + " "))
+            .forEach(System.out::print);
+        
     }
 }
