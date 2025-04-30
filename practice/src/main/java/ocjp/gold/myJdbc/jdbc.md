@@ -24,6 +24,34 @@ try (PreparedStatement ps = con.prepareStatement(sql)) {
 ```
 - 파라미터를 설정하지 않고 execute메소드를 호출하면 런타임 예외(SQLException)가 발생한다. 
 - SQL실행 메소드 종류
+    - execute() : 반환형은 boolean 실행문이 갱신/삭제/등록 일경우 false, 조회일경우 true
     - executeUpdate() : insert, update, delete문에 사용된다. 반환형은 int
     - executeQuery() : select문에 사용된다. 반환형은 ResultSet
+    - Statement.executeBatch() : 한번에 복수의 SQL문을 실행하기위한 메소드
+- ResultSet
+```java
+try (Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/data/Sample")){
+    var sql = "select * from item";
+    try (PreparedStatement ps = con.prepareStatement(sql)) {
+        ResultSet rs = ps.executeQuery();
+        // next를 한번도 호출하지 않으면 런타임 예외
+        while(rs.next()){
+            // 열 번호(1부터) 혹은 열 이름을 지정해서 취득
+            System.out.print(rs.getInt(1));
+            System.out.print(rs.getInt("age"));
+            System.out.print(rs.getString(2));
+            System.out.print(rs.getString("name"));
+        }
+    }
+}
+
+```
+## 스토어드 프로시저(Stored Procedure)
+```java
+try (var cs = con.prepareCall("call sample_proc(?. ?)")) {
+    cs.setString(1, "test");
+    cs.setInt(2, 1);
+    cs.execute();
+}
+```
 
