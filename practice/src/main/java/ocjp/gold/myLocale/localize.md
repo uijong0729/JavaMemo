@@ -33,10 +33,12 @@ Locale locale = Locale.forLanguageTag("en-US-x-lvariant-POSIX");
 Locale locale = Locale.forLanguageTag("ja-JP-x-lvariant-JP")
 ```
 ## 프로퍼티 파일
-#### 프로퍼티 파일에 적는 키와 값의 표기
+##### 프로퍼티 파일에 적는 키와 값의 표기
 ```properties
 # 방법1
 key=value
 # 방법2
 key:value
 ```
+##### 프로퍼티 파일을 읽고 쓰는 프로그램에서 디버그 차원에서 프로퍼티 파일의 키와 값을 일람표시 하기위한 방법
+- Properties클래스의 list메소드에 PrintWriter형 오브젝트에 참조를 넘긴다.
