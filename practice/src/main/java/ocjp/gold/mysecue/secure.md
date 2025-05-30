@@ -63,3 +63,27 @@ public class TestCalendar {
 - 패키지 안에서 공개하는 인터페이스를 제한한다
 - 모듈을 사용해 공개할 패지키를 제한한다
 - 클래스를 선언할 때 악의적인 오버라이딩을 막기위해 final 수식어를 사용한다
+- SQL인젝션을 막기위한 인터페이스
+```java
+// java.sql.PreparedStatement
+String sql = "SELECT * FROM test WHERE name = ?";
+PreparedStatement ps = con.prepareStatement(sql);
+ps.setString(1, name);
+ResultSet rs = ps.executeQuery();
+```
+- 기밀정보를 다루는 인스턴스를 직렬화 할 때는 transient
+```java
+public class Human implements Serializable {
+    // 직렬화 대상
+    private String name;
+    // 직렬화 제외
+    private transient String telephone;
+}
+```
+#### 직렬화-프록시 패턴
+- 객체를 직렬화 할 때 본체 클래스가 아닌, 별도의 프록시 클래스를 이용해 직렬화를 수행하는 패턴
+- 직렬화 : writeReplace
+- 역직렬화 : readResolve
+#### volatile
+- 멀티스레드 환경에서 필드의 캐쉬를 제어해서 퍼포먼스를 향상시키는 예약어
+- 변수를 메인 메모리에 저장하고 읽어오기 때문에 변수 값 불일치 문제를 해결할 수 있다 (항상 최신의 값을 보장)
