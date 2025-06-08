@@ -33,7 +33,8 @@ grant codeBase "file:/Users/eui/workspace/lib.jar" {
 };
 ```
 #### 가변(可変) 오브젝트의 취급 주의점
-- getter메소드에서 필드의 참조를 그대로 반환하지 않고 카피본을 만들어 반환한다 **(참조를 그대로 반환하면 필드가 private더라도 액세스 메소드를 제공한다면 실질적으로 public 필드와 차이 없음)**
+- getter메소드에서 필드의 참조를 그대로 반환하지 않고 카피본을 만들어 반환한다 
+- 참조를 그대로 반환하면 필드가 private더라도 액세스 메소드를 제공한다면 실질적으로 public 필드와 차이 없기 때문에 **캡슐화라는 단어와 와 시큐어코딩 간에 직접적인 관계는 없다**
 ```java
 public Date getDate() {
     return (Date) this.date.clone();
