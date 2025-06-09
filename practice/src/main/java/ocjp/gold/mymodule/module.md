@@ -62,6 +62,7 @@ module app {
 ```java
 module lib {
     exports lib;
+    // uses가 있는 모듊명을 requires로 포함시켜야 한다
     requires app;
     // app.Hello의 구현체는 lib모듈의 HelloImpl클래스입니다.
     provides app.Hello with lib.HelloImpl;
