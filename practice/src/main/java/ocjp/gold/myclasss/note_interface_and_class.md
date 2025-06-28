@@ -117,6 +117,7 @@ public class Main {
 enum Sample {
     A("hello"), B("hello"), C("hello")
     private final String value;
+    // Enum의 생성자의 접근자는 `private`만 가능하다
     private Sample(String value) {
         System.out.println(value);
         this.value = value;

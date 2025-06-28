@@ -1,7 +1,11 @@
 ## 로컬라이즈
-#### 디폴트 로케일 정보 취득
+#### 디폴트 로케일 정보 취득/설정
 ```java
+// 취득
 Locale locale = Locale.getDefault();
+// 설정
+Locale.setDefault(Locale.Category.FORMAT, Locale.JAPANESE);
+Locale.setDefault(Locale.JAPANESE);
 ```
 #### 일본지역+일본어 로케일 정보 취득
 ```java
