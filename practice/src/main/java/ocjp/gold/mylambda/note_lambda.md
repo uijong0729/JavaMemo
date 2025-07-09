@@ -1,14 +1,22 @@
 ## 람다와 함수형 인터페이스
-- Supplier는 인수를 받지않고 get으로 값을 받는다(공급 전문)
+- **Supplier**는 인수를 받지않고 **get**으로 값을 받는다(공급 전문)
 ```java
 Supplier<String> supplier = () -> "test";
 System.out.println(supplier.get());
 ```
 - Consumer는 인수를 하나만 받지만 BiConsumer는 인수를 두개로 받는다
 ```java
+// BiConsumer
 BiConsumer<Integer, Integer> test = (a, b) -> System.out.println(a + b);
+test.accept(3, 5);
+
+// Consumer
+// 람다식에서 파라미터가 하나일 때는 괄호 생략가능
+// Consumer<String> consumer = (String msg) -> System.out.println(msg);
+Consumer<String> consumer = msg -> System.out.println(msg);
+consumer.accept("Hello");
 ```
-- Predicate 활용 (메소드는 test)
+- Predicate 활용 (메소드는 **test**)
 ```java
 public static void main(String[] args) {
     Predicate<Integer> p1 = x -> x > 0;
@@ -17,7 +25,7 @@ public static void main(String[] args) {
     System.out.println(p1.or(p2).test(100));      
 }
 ```
-- Function는 apply, compose, andThen 메소드 보유 (before, after라는 메소드는 없다)
+- Function는 **apply, compose, andThen** 메소드 보유 (before, after라는 메소드는 없다)
 ```java
 public static void main(String[] args) {
     Function<Integer, Integer> f1 = x -> x + 2;
@@ -29,7 +37,7 @@ public static void main(String[] args) {
 }
 ```
 - UnaryOperator (단항 연산자)
-    - Function을 계승하므로 추상 메소드는 apply
+    - Function을 계승하므로 추상 메소드는 **apply**
         ```java
         UnaryOperator<Integer> func = i -> ++i;
         ```
@@ -37,9 +45,10 @@ public static void main(String[] args) {
         ```java
         list.replaceAll(x -> x.toUpperCase());
         ```
-    - BynaryOperator
-        ```java
-        BinaryOperator<String> bo = (a, b) -> a + b;
-        // test
-        System.out.println(bo.apply("te", "st"));
-        ```
+- BynaryOperator (이항 연산자)
+    ```java
+    // 두 인수와 반환값 모두 같은 타입 T를 사용(제네릭 하나만)
+    BinaryOperator<String> bo = (a, b) -> a + b;
+    // test
+    System.out.println(bo.apply("te", "st"));
+    ```

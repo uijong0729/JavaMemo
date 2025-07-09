@@ -21,6 +21,7 @@ public class ExceptionSample {
         try (a;
          A b = new A("B");
          A c = new A("C")) {
+            // 실행결과 : mainCBA
             System.err.print("main");
         } catch (Exception e) {
             // TODO: handle exception
@@ -51,7 +52,7 @@ class A implements AutoCloseable {
         }
 
         // 되는 케이스 1
-        A a = new A("A");
+        A a = new A("A");zm
         try (a) {
             System.err.print("main");
         } catch (Exception e) {

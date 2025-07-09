@@ -45,15 +45,18 @@ char[] password = console.readPassword();
 - java.nio.file.Path : 파일이나 디렉토리(폴더)의 경로를 나타냄
     - Path에서 File로 캐스팅
     ```java
+    // java.nio.file.Path
     Path path = new File("sample.txt").toPath();
     ```
     - Path인스턴스 생성
     ```java
+    // java.nio.file.Path
     Path path = Paths.get("dir/sample.txt");
     ```
 - java.nio.file.Files : 파일 조작
-    - File에서 Path로 캐스팅
+    - Path에서 File로 캐스팅
     ```java
+    Path path = Paths.get("dir/sample.txt");
     File path = path.toFile();
     ```
     - File 실제파일 작성
@@ -62,21 +65,33 @@ char[] password = console.readPassword();
     // FileAlreadyExistsException 예외발생
     boolean isSuccess = Files.createFile(Paths.get("sample.txt"));
     ```
-    - walk : 서브 디렉토리가 있을경우 재귀적으로 처리
+    - walk : 지정한 경로를 루트로 하여 하위 디렉토리까지 `재귀적으로` 모든 파일과 디렉토리 경로를 스트림으로 반환
     ```java
+    // src이하의 모든 파일/폴더 경로를 콘솔에 출력
     Files.walk(base.resolve("src")).forEach(System.out::println);
     ```
     
 
-#### Path클래스
-- resolve 메서드 : Path를 인수로 받아 파일경로를 결합한다
+### Path클래스
+- Path.resolve 메서드
+    - Path를 인수로 받아 파일경로를 결합한다
+    - resolve는 경로 결합만 할 뿐 실제로 파일을 만드는건 아님
 ```java
 Path dir2 = Paths.get("dir", "subdir");
+// dir/subdir/data.txt Path인스턴스 생성
 dir2.resolve(Paths.get("data.txt"));
-// >> 결과 : dir/subdir/data.txt에 파일이 생성됨
 ```
 
-#### Files클래스 파일의 이동과 복사
+### Files클래스 
+#### 파일 생성
+```java
+// 디렉토리 생성
+Files.createDirectories(dir2);
+// 파일 생성
+Files.createFile(dir2.resolve("data.txt"));
+```
+#### 파일의 이동과 복사
+- 파일이나 경로가 이미 존재하면 FileAlreadyExistsException 예외가 발생 할 수 있음
 ```java
 // 파일 이동과 복사
 Path originalFile = Paths.get("dir", "original.txt");
@@ -85,8 +100,12 @@ Path backupDir = Paths.get("dir", "subdir");
 try {
     // 파일 복사 (파일 -> 파일)
     Files.copy(originalFile, backupFile);
-    // 파일 이동 (파일 -> 디렉토리)
-    Files.move(originalFile, backupDir);
+    
+    // 파일인지 디렉토리인지 구분이 안되므로 체크해야한다
+    if (Files.isDirectory(backupDir)) {
+        // 파일 이동 (파일 -> 디렉토리)
+        Files.move(originalFile, backupDir);
+    }
 } catch (Exception e) {}
 ```
 
@@ -96,9 +115,9 @@ BufferedWriter out = Files.newBufferedWriter(sample, StandardOpenOption.APPEND);
 ```
 
 #### java.nio.file.FileVisitor 인터페이스
-※파일 처리가 끝났을 때는 따로 이벤트가 없다
+`※파일 처리가 끝났을 때를 줍는 이벤트는 없다`
 - preVisitDirectory : 디렉토리에 들어갔을 때 이벤트 처리
 - postVisitDirectory : 디렉토리에서 나왔을 때 이벤트 처리
-- visitFile : 파일에 조우했을 때
-- visitFileFailed : 파일 처리에 실패했을 때
+- **visitFile : 파일에 조우했을 때**
+- visitFileFailed : 파일 처리에 실패했을 때 (성공이벤트는 없다)
 

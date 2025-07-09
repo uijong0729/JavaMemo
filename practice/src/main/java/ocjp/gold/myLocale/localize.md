@@ -32,7 +32,6 @@ Locale locale2 = Locale.US;
 ```java
 // 미국
 Locale locale = Locale.forLanguageTag("en-US-x-lvariant-POSIX");
-
 // 일본
 Locale locale = Locale.forLanguageTag("ja-JP-x-lvariant-JP")
 ```
@@ -53,7 +52,15 @@ String value = prop.getProperty("key");
 ```
 ##### 프로퍼티 파일을 읽고 쓰는 프로그램에서 디버그 차원에서 프로퍼티 파일의 키와 값을 일람표시 하기위한 방법
 - Properties클래스의 list메소드에 PrintWriter형 오브젝트에 참조를 넘긴다.
-##### 프로퍼티 파일을 Unicode표기로 변환하는 커맨드
+```java
+Properties prop = new Properties();
+prop.load(new FileReader("sample.properties"));
+PrintWriter writer = new PrintWriter(System.out);
+// 프로퍼티 파일의 키와 값을 일람표시
+prop.list(writer);
+writer.flush();
+```
+##### 일본어 비ASCII 문자(유니코드)를 ASCII 코드로 변환하는 명령어
 ```shell
 $ native2ascii input.properties output.properties
 ```
@@ -66,9 +73,9 @@ ResourceBundle resource = ResourceBundle.getBundle("sample");
 - 위 소스에서 만약 디폴트 로케일이 `ja_JP`인 경우, `sample_ja_JP.properties`와 `sample.properties`파일이 둘 다 존재한다면 `sample_ja_JP.properties`를 우선적으로 읽는다.
 - 로케일 정보에 대응하는 프로퍼티 파일이 없다면 `MissingResourceException`발생
 - 디폴트 로케일이 아닌 다른 로케일 정보를 읽고 싶다면
-```java
-ResourceBundle resource = ResourceBundle.getBundle("sample", Locale.US);
-```
+    ```java
+    ResourceBundle resource = ResourceBundle.getBundle("sample", Locale.US);
+    ```
 ## 포맷
 ### 날짜 포맷(DateTimeFormatter)
 #### DateTimeFormatter 정수
