@@ -1,17 +1,34 @@
 # Stream API
 ## Stream을 이용하는 이유
-- Collection이나 Array의 전 요소를 형변환하는 경우
-- Collection이나 Array의 요소의 합게나 평균 등의 통계를 구하는 경우
-- Collection이나 Array의 요소를 무언가의 조건으로 그룹화하는 경우
-- Collection이나 Array에서 조건에 맞는 데이터를 검색하는 경우
+- Collection이나 Array의 전 요소를 **형 변환**하는 경우
+```java
+// map메소드를 이용해 String을 Integer로
+List<String> list = Arrays.asList("1", "2", "3");
+List<Integer> intList = list.stream()
+    .map(Integer::parseInt)
+    .collect(Collectors.toList());
+```
+- Collection이나 Array의 요소의 **합게나 평균** 등의 통계를 구하는 경우
+```java
+// sum, average합계와 평균
+// 통계 메소드를 사용하려면 기본형 스트림이어야 하기에 mapToInt가 필요하다
+List<Integer> nums = Arrays.asList(1, 2, 3, 4, 5);
+int sum = nums.stream().mapToInt(i -> i).sum();
+double avg = nums.stream().mapToInt(i -> i).average().orElse(0);
 
-## 배열 → 스트림 변환
+```
+- Collection이나 Array의 요소를 무언가의 조건으로 **그룹화**하는 경우
+- Collection이나 Array에서 조건에 맞는 데이터를 **검색**하는 경우
+
+## 배열 → 스트림 변환 : Arrays.stream
 #### 기본형(Primitive)
 ```java
+// 기본형 스트림
 IntStream stream = Arrays.stream(array);
 ```
 #### 참조형(Reference)
 ```java
+// 제네릭 이용
 Stream<String> stream = Arrays.stream(array);
 ```
 
@@ -20,16 +37,24 @@ Stream<String> stream = Arrays.stream(array);
 
 ## String형 요소를 다루는 list에서 병렬 스트림을 취득하는 코드
 - 병렬 스트림 : 멀티스레드를 이용해 병럴처리를 사용하는 경우를 지원하기 위한 객체
+- parallelStream의 처리순서를 유지하고 싶다면 forEach가 아니라 `forEachOrdered` 메소드를 사용해야 한다.
 ```java
 Stream<String> stream = list.parallelStream();
 ```
 
 ## 정렬
-- sotred ('ed'주의)
-
+- **sorted** ('ed'주의)
+- sorted는 Stream과 IntStream양쪽에 어느 쪽이든 갖고있다
+```java
+List<Integer> nums = Arrays.asList(5, 3, 1, 4, 2);
+List<Integer> sortedNums = nums.stream()
+    .sorted()
+    .collect(Collectors.toList());
+System.out.println(sortedNums); // [1, 2, 3, 4, 5]
+```
 ## findAny와 findFirst
 #### findFirst
-- 스트림의 첫번째 요소를 반환한다 (최초에 '처리한' 요소가 아님)
+- 스트림의 *첫번째 요소*를 반환한다 (병렬 스트림주의 : 최초에 '처리한' 요소가 아님)
 - 항상 같은 요소를 반환한다는 보장(첫번째 요소)
 #### findAny
 - 항상 같은 요소를 반환한다는 보장이 없다
@@ -43,7 +68,7 @@ List<Integer> list = Arrays.asList(1,2,3,4,5);
 // Optional로 받을게
 Optional<Integer> result = list.stream().reduce((c, d) -> c + d);
 result.ifPresent(System.out::println); // 15
-// 값이 없다면 0으로 받을테니 일단 줘
+// 빈 리스트인경우 result2에 0을 반환
 Integer result2 = list.stream().reduce(0, (c, d) -> c + d);
 System.out.println(result2);
 ```
@@ -59,7 +84,7 @@ strResult.ifPresent(System.out::println);
 
 ## java.util.stream.Collector
 ### supplier, accumulator, combiner, finisher
-- Stream을 다룰 때 도중경과를 보존하는 오브젝트를 사용하고 싶을 때 java.util.stream.Collector를 사용한다.
+- **Stream을 다룰 때 도중경과를 보존하는 오브젝트를 사용하고 싶을 때 java.util.stream.Collector를 사용한다.**
 - 예제 : accumulator가 실제로 수행하고싶은 처리를 기술하는 인터페이스
 ```java
 // java.util.Collector
@@ -77,6 +102,7 @@ System.out.println("Total length: " + totalLength); // 출력: Total length: 15
 ### Collectors.groupingBy
 - 성별로 그룹화하는 예제 
 - 리스트가 Map<<그룹기준>, 리스트<오브젝트>>로 재작성됨
+- ex : `Map<Gender, List<Human>>`
 ```java
 // java.util.Collector : groupingBy
 List<Human> humanList = Arrays.asList(
@@ -91,6 +117,7 @@ System.out.println(group);
 ```
 
 ## Collectors.partitioningBy
+- 조건에 일치하는 그룹과 일치하지 않는 그룹
 ```java
 // java.util.Collector : partitioningBy
 // 스트림의 요소를 지정한 조건에 일치하는 그룹과 일치하지 않는 그룹, 두 가지로 분할
@@ -107,7 +134,7 @@ listKeys.forEach(System.out::println);
 ## peek
 ```java
 // Stream peek
-// peek은 처리 중간에 픽업해서 내용을 들여다보고 싶을때 사용된다. (실제 데이터에 영향은 없음)
+// peek은 처리 중간에 픽업해서 내용을 들여다보고 싶을때 사용된다. (실제 데이터에 영향은 없음) 처리순서도 중간에 개입한다.
 Stream<String> stream3 = Arrays.asList("banana", "apple", "orange").stream();
 // 콘솔 : banana BANANA BANANAorange ORANGE ORANGE
 stream3.filter(str -> str.length() > 5)
