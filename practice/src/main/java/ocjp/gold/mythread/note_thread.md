@@ -1,6 +1,6 @@
 # 3.병렬처리
 ## Thread
-- Thread에서 run을 직접 호출하면 새 쓰레드가 아닌, run을 호출한 기존 쓰레드에서 실행되기 때문에 start를 사용해야한다.
+- Thread에서 run을 직접 호출하면 새 쓰레드가 아닌, run을 호출한 기존 쓰레드에서 실행되기 때문에 `start()`를 사용해야한다.
 ```java
 Thread t = new Thread() {
     @Override
@@ -15,11 +15,11 @@ Thread t = new Thread() {
         System.out.print("run ");
     };
 };
-// 결과 : run
+// run을 직접 호출하면 run만 실행된다.
 t.run();
-System.out.println("");
 
 // 결과 : start run
+// start를 실행하면 start가 먼저 실행되고 run이 실행
 t.start();
 ```
 - 미리 몇 개의 쓰레드를 만들어 Pool해두고 시간이 경과함에 따라 불필요한 쓰레드를 삭제하는 ExecutorService를 가져오는 Executors클래스의 메소드는 newCachedThreadPool메소드
@@ -31,7 +31,7 @@ for (int i = 0; i < 5; i++) {
     });
 }
 ```
-- 쓰레드 지연실행 Scheduled
+- 쓰레드 지연실행 `Scheduled`
 ```java
 // 1초 후에 실행하는 쓰레드
 ScheduledExecutorService exec2 = Executors.newSingleThreadScheduledExecutor();
@@ -40,15 +40,17 @@ exec2.schedule(() -> {
     exec2.shutdown();
 }, 1, TimeUnit.SECONDS);
 ```
-- 쓰레드 지연후 반복실행
+- 쓰레드 반복실행 (시작시점 기준으로 고정된 간격)
 ```java
 // 2초 후 1초 마다 실행하는 쓰레드를 실행 지정 반복
-// 완전히 고정된 간격이므로 시간보다 처리가 길어지면 작업들이 서로 병렬적으로 실행됨
+// 완전히 고정된 간격이므로 시간보다 처리가 길어지면 작업들이 서로 병렬적으로 실행됨 
 ScheduledExecutorService exec3 = Executors.newSingleThreadScheduledExecutor();
 exec3.scheduleAtFixedRate(() -> {
     System.out.println("exec3");
 }, 2, 1, TimeUnit.SECONDS);
-
+```
+- 쓰레드 반복실행 (종료시점 기준으로 지연된 간격)
+```java
 // 2초 후 1초 마다 실행하는 쓰레드를 실행
 // 시간보다 처리가 길어지면 작업의 완료까지 기다린 뒤 실행
 ScheduledExecutorService exec4 = Executors.newSingleThreadScheduledExecutor();
@@ -57,7 +59,22 @@ exec4.scheduleWithFixedDelay(() -> {
 }, 2000, 1000, TimeUnit.SECONDS);
 ```
 - Callable을 get했을때 처리에 예외가 발생하는 경우, 예외를 Catch하려면 ExecutionException으로 Catch해야한다.
-- CyclicBarrier :여러개의 스레드의 종료를 기다려 동기화하는 처리를 구현
+```java
+ExecutorService exec = Executors.newSingleThreadExecutor();
+Future<Integer> future = exec.submit(() -> {
+    // callable 내용
+    // ...
+});
+
+try {
+    Integer result = future.get(); // get()에서 예외 발생
+} catch (ExecutionException e) {
+    System.out.println("처리 중 예외 발생: " + e.getCause());
+} catch (InterruptedException e) {
+    Thread.currentThread().interrupt();
+}
+```
+- CyclicBarrier :여러개의 스레드의 종료를 기다려`(await메소드)` 동기화하는 처리를 구현
 ```java
 // Task.java
 public class Task implements Runnable {
@@ -118,6 +135,8 @@ public class Main {
 }
 ```
 - ReentrantLock : 여러 메소드에 걸쳐 배타제어하는 방법
+- lock()을 호출한 스레드만 임계영역(공유 자원)에 접근할 수 있고,
+다른 스레드는 unlock()이 호출될 때까지 대기
 ```java
 public class LockedRunner {
     ReentrantLock reentrantLock = new ReentrantLock();
